@@ -9,7 +9,7 @@ contract SmartWeddingContract {
   event Divorced(uint timestamp);
   event FundsSent(uint timestamp, address wallet, uint amount);
   event FundsReceived(uint timestamp, address wallet, uint amount);
-  event WeddingCreated(uint timestamp, address husbandAddress, string husbandFullName, address wifeAddress, string wifeFullName);
+  event WeddingCreated(uint timestamp, address husbandAddress, string husbandFullName, address wifeAddress, string wifeFullName, string weddingDate);
 
   bool public signed = false;
   bool public divorced = false;
@@ -22,6 +22,8 @@ contract SmartWeddingContract {
   
   address public wifeAddress;
   string public wifeFullName;
+  
+  string public weddingDate;
   string public writtenContractIpfsHash;
 
 
@@ -62,7 +64,7 @@ contract SmartWeddingContract {
    * @param _husbandAddress Wallet address of the husband.
    * @param _wifeAddress Wallet address of the wife.
    */
-  constructor(address _husbandAddress, string _husbandFullName, address _wifeAddress, string _wifeFullName) public {
+  constructor(address _husbandAddress, string _husbandFullName, address _wifeAddress, string _wifeFullName, string _weddingDate) public {
     require(_husbandAddress != address(0), "Husband address must not be zero!");
     require(_wifeAddress != address(0), "Wife address must not be zero!");
     require(_husbandAddress != _wifeAddress, "Husband address must not equal wife address!");
@@ -71,7 +73,8 @@ contract SmartWeddingContract {
     husbandFullName = _husbandFullName;
     wifeAddress = _wifeAddress;
     wifeFullName = _wifeFullName;
-    emit WeddingCreated(now, husbandAddress, husbandFullName, wifeAddress, wifeFullName);
+    weddingDate = _weddingDate;
+    emit WeddingCreated(now, _husbandAddress, _husbandFullName, _wifeAddress, _wifeFullName, _weddingDate);
   }
 
   /**
